@@ -30,4 +30,16 @@ class PierAnonymizerTest < Minitest::Test
     assert_equal from_email('test@gmail.com'), '4c7d65915a3bf4@gmail.com'
   end
 
+  def test_license_plate_anonymized
+    license_plate = 'abc1234';
+    assert_equal from_license_plate(license_plate).length, 7
+
+    license_plate_hifen = 'abc-1234';
+    assert_equal from_license_plate(license_plate_hifen, true).length, 8
+
+    assert_equal from_license_plate(license_plate), 'f4e1e20'
+    assert_equal from_license_plate(license_plate), from_license_plate(license_plate_hifen)
+
+  end
+
 end
