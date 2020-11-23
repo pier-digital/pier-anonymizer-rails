@@ -61,4 +61,11 @@ module PierAnonymizer
     return hash
 
   end
+
+  def from_json(json, field, lambda_from_func)
+    if json[field]
+      json[field] = lambda_from_func.call(json[field])
+    end
+
+  end
 end

@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require 'test_helper'
 require 'pier_anonymizer'
+require 'json'
 
 class PierAnonymizerTest < Minitest::Test
   include PierAnonymizer
@@ -39,6 +40,20 @@ class PierAnonymizerTest < Minitest::Test
 
     assert_equal from_license_plate(license_plate), 'f4e1e20'
     assert_equal from_license_plate(license_plate), from_license_plate(license_plate_hifen)
+
+  end
+
+  def test_json_anonymized
+    json = JSON.parse '{"name": "test", "email": "test@email.com"}'
+    
+    # Anonymize name
+    from_json(json, 'name', -> (value) { from_general_string(value)} )
+
+    # Anonymizing data which does not exist do not create its column
+    from_json(json, 'not_exist', -> (value) { from_general_string(value)} )
+
+    json_expected = JSON.parse '{"name": "4c7d65915a3bf4", "email": "test@email.com"}'
+    assert_equal json, json_expected
 
   end
 
