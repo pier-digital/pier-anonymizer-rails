@@ -62,6 +62,10 @@ module PierAnonymizer
 
   end
 
+  def from_zipcode(zipcode)
+    get_hash(zipcode).slice(0,10)
+  end
+
   def from_json(json, field, lambda_from_func)
     if json && json[field]
       json[field] = lambda_from_func.call(json[field])
