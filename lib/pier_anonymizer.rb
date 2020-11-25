@@ -63,7 +63,7 @@ module PierAnonymizer
   end
 
   def from_json(json, field, lambda_from_func)
-    if json[field]
+    if json && json[field]
       json[field] = lambda_from_func.call(json[field])
     end
 
