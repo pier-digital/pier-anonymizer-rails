@@ -49,12 +49,12 @@ module PierAnonymizer
     return hash;
   end
 
-  def from_license_plate(license_plate, hasHifen = false, size = 7)
+  def from_license_plate(license_plate, hasHyphen = false, size = 7)
     return nil if license_plate.nil?
 
     hash = get_hash(license_plate.sub('-', '')).slice(0, size)
 
-    if hasHifen
+    if hasHyphen
       hash = "#{hash[0..2]}-#{hash[3..]}"
     end
 
